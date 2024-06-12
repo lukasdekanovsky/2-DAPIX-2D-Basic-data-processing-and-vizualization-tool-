@@ -6,7 +6,7 @@ from tkinter import Menu
 from tkinter import Listbox
 
 from file_manager import FileManager
-
+from data_visualization_manager import DataVisualizationManager
 # ---------------- CONSTANTS --------------- #
 WINDOW_BACKGROUND = "#F0FFFF"
 BUTTON_BACKGROUND_OPENFILE = "#7FFFD4"
@@ -68,6 +68,7 @@ def main():
 
     # -------------------- MANAGERS ------------------- #
     file_manager = FileManager()
+    data_manager = DataVisualizationManager()
 
     # LABELS ----------------- #
     open_file_button_label = tk.Label(text="Select a source\ndata file:",font=(FONT_NAME, 10, "bold"), bg=WINDOW_BACKGROUND)
@@ -88,8 +89,11 @@ def main():
         file_box.insert(tk.END, file_name)
 
         # Create delete button for each file
-        delete_button = tk.Button(text="Delete",activebackground='#FFEFDB',activeforeground='white', height=5, width=5, command=lambda: delete_file(window, file_manager, file_box, data_folder))
-        delete_button.grid(column=3, row=1, padx=5, sticky="")
+        display_button = tk.Button(text="Display",activebackground='#7FFFD4',activeforeground='white', height=2, width=5)
+        display_button.grid(column=3, row=1, padx=5, sticky="n")
+
+        delete_button = tk.Button(text="Delete", background="#EE3B3B",  activebackground='#FFEFDB',activeforeground='white', height=2, width=5, command=lambda: delete_file(window, file_manager, file_box, data_folder))
+        delete_button.grid(column=3, row=1, padx=5, sticky="s")
 
 
 
