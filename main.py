@@ -18,19 +18,22 @@ def open_file(window, file_manager):
     window.destroy()
     main()
 
-def option1_function(window): # Reload the application
+def app_reload(window): # Reload the application
     print("Application reload selected")
     window.destroy()
     main()
 
-def option2_function(window, file_manager, file_box, data_folder):
+def delete_file(window, file_manager, file_box, data_folder):
     print("Delete selected")
     file_manager.delete_file(file_box, data_folder)
     window.destroy()
     main()
 
-def option3_function():
-    print("Function3 selected")
+def process_file():
+    print("Processing proces started")
+
+def download_report():
+    print("Downloading report")
 
 # ------------------ UI SETUP + MAIN ------------------ #
 def main():
@@ -45,13 +48,13 @@ def main():
 
     # MENU menu
     data_menu = Menu(menu, tearoff=0)
-    data_menu.add_command(label="Reports", command=option3_function)
-    data_menu.add_command(label="Reinitialize", command=lambda: option1_function(window))
+    data_menu.add_command(label="Reports", command=download_report)
+    data_menu.add_command(label="Reinitialize", command=lambda: app_reload(window))
     menu.add_cascade(label="Menu", menu=data_menu)
 
     # PROCESSING menu
     processing_menu = Menu(menu, tearoff=0)
-    processing_menu.add_command(label="Proces data", command=option3_function)
+    processing_menu.add_command(label="Proces data", command=process_file)
     menu.add_cascade(label="Processing", menu=processing_menu)
 
     # Canvas
@@ -85,7 +88,7 @@ def main():
         file_box.insert(tk.END, file_name)
 
         # Create delete button for each file
-        delete_button = tk.Button(text="Delete",activebackground='#FFEFDB',activeforeground='white', height=5, width=5, command=lambda: option2_function(window, file_manager, file_box, data_folder))
+        delete_button = tk.Button(text="Delete",activebackground='#FFEFDB',activeforeground='white', height=5, width=5, command=lambda: delete_file(window, file_manager, file_box, data_folder))
         delete_button.grid(column=3, row=1, padx=5, sticky="")
 
 
