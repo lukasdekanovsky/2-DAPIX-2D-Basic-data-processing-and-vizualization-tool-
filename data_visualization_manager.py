@@ -6,7 +6,6 @@ import pandas as pd
 import shutil
 import matplotlib.pyplot as plt
 import numpy as np
-import matplotlib.cm
 import os
 
 class DataVisualizationManager():
