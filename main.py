@@ -4,7 +4,6 @@ from tkinter import messagebox
 from tkinter import scrolledtext
 from tkinter import Menu
 from tkinter import Listbox
-import matplotlib.cm
 import matplotlib
 
 from file_manager import FileManager

@@ -3,7 +3,6 @@ import tkinter as tk
 from pandastable import Table, TableModel
 import numpy as np
 import pandas as pd
-import shutil
 import matplotlib.pyplot as plt
 import numpy as np
 import os
