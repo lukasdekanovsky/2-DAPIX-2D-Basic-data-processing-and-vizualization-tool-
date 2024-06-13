@@ -18,7 +18,7 @@ class DataVisualizationManager():
         
         # Read the selected file into a pandas DataFrame
         file_path = os.path.join(data_folder, selected_file)
-        df = pd.read_csv(file_path)  # Assuming the file is in CSV format
+        df = pd.read_csv(file_path, delimiter=' ')  # Assuming the file is in CSV format and comma-separated
         
         # Create a tkinter window
         table_window = tk.Toplevel(window)
@@ -28,7 +28,7 @@ class DataVisualizationManager():
         table = Table(table_window, dataframe=df, showtoolbar=True, showstatusbar=True)
         table.show()
 
-    def plot_2D_image(self, window, file_box, data_folder):
+    def show_2D_image(self, window, file_box, data_folder):
         
         selected_file = file_box.get(file_box.curselection())
         file_path = os.path.join(data_folder, selected_file)

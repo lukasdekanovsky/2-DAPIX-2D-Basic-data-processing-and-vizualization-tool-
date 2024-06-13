@@ -12,7 +12,7 @@ from data_visualization_manager import DataVisualizationManager
 
 # ---------------- CONSTANTS -------------------------- #
 WINDOW_BACKGROUND = "#F0FFFF"
-BUTTON_BACKGROUND_OPENFILE = "#7FFFD4"
+BUTTON_BACKGROUND_OPENFILE = "#98F5FF"
 FONT_NAME = "Courier"
 
 # ------------------ FUNCTIONS ------------------------ #
@@ -38,7 +38,10 @@ def data_check(window, data_manager, file_box, data_folder):
 
 def plot_2D_image(window, data_manager, file_box, data_folder):
     print("Plot 2D Image")
-    data_manager.plot_2D_image(window, file_box, data_folder)
+    data_manager.show_2D_image(window, file_box, data_folder)
+
+def open_files():
+    ...
 
 def download_report():
     print("Downloading report")
@@ -79,19 +82,31 @@ def main():
     data_manager = DataVisualizationManager()
 
     # LABELS ----------------- #
+    data_processing2D_label = tk.Label(text="2D Data processing:", font=(FONT_NAME, 15, "bold"), bg=WINDOW_BACKGROUND)
+    data_processing2D_label.grid(column=0, row=1, sticky="ew", padx=50)
+
     open_file_button_label = tk.Label(text="Select a source\ndata file:",font=(FONT_NAME, 10, "bold"), bg=WINDOW_BACKGROUND)
-    open_file_button_label.grid(column=0, row=1, sticky="w")
+    open_file_button_label.grid(column=0, row=2, sticky="w")
 
     data_processing_label = tk.Label(text="Data processing:", font=(FONT_NAME, 10, "bold"), bg=WINDOW_BACKGROUND)
-    data_processing_label.grid(column=0, row=2, sticky="w")
+    data_processing_label.grid(column=0, row=3, sticky="w")
+
+    data_processingCT_label = tk.Label(text="Scanning gif processing:", font=(FONT_NAME, 15, "bold"), bg=WINDOW_BACKGROUND)
+    data_processingCT_label.grid(column=0, row=4, sticky="ew", padx=50, pady=10)
+
+    open_files_button_label = tk.Label(text="Select files for\ngif creation:",font=(FONT_NAME, 10, "bold"), bg=WINDOW_BACKGROUND)
+    open_files_button_label.grid(column=0, row=5, sticky="w")
 
     # BUTTONS ---------------- #
-    open_file_button = tk.Button(text="Open file", bg=BUTTON_BACKGROUND_OPENFILE, command=lambda: open_file(window, file_manager))
-    open_file_button.grid(column=1, row=1, sticky="w", padx=5)  
+    open_file_button = tk.Button(text="Open file", bg=BUTTON_BACKGROUND_OPENFILE, height=2, width=15, command=lambda: open_file(window, file_manager))
+    open_file_button.grid(column=0, row=2, sticky="e", padx=10)  
+
+    open_files_button = tk.Button(text="Open files", bg=BUTTON_BACKGROUND_OPENFILE, height=2, width=15, command= open_files)
+    open_files_button.grid(column=0, row=5, sticky="e", padx=10)
 
     # FILEBOX ---------------- #
-    file_box = Listbox(window, width=20, height=5, font=(FONT_NAME, 10))
-    file_box.grid(column=1, row=1, columnspan=2, pady=2, sticky="e")
+    file_box = Listbox(window, width=30, height=3, font=(FONT_NAME, 10))
+    file_box.grid(column=1, row=2, columnspan=2, padx=5, sticky="ew")
 
     # Populate file box with file names
     data_folder = "./data"
@@ -103,13 +118,13 @@ def main():
 
         # Create delete button for each file
         display_button = tk.Button(text="Show",activebackground='#7FFFD4',activeforeground='white', height=2, width=5, command=lambda: data_check(window, data_manager, file_box, data_folder))
-        display_button.grid(column=3, row=1, padx=5, sticky="n")
+        display_button.grid(column=3, row=2, padx=5, sticky="n")
 
         delete_button = tk.Button(text="Delete", background="#EE3B3B",  activebackground='#FFEFDB',activeforeground='white', height=2, width=5, command=lambda: delete_file(window, file_manager, file_box, data_folder))
-        delete_button.grid(column=3, row=1, padx=5, sticky="s")
+        delete_button.grid(column=3, row=3, padx=5, sticky="s")
 
-        plot_button = tk.Button(text="Plot 2D Image", bg="#7FFFD4", height=2, width=15, command=lambda: plot_2D_image(window, data_manager, file_box, data_folder))
-        plot_button.grid(column=1, row=2, padx=5, sticky="w")
+        plot_button = tk.Button(text="Show 2D Image", bg="#7FFFD4", height=2, width=15, command=lambda: plot_2D_image(window, data_manager, file_box, data_folder))
+        plot_button.grid(column=0, row=3, padx=10, sticky="e")
 
 
 
