@@ -4,7 +4,7 @@
 - Data input 256 x 256 data matrix, which grounds from the chip/sensor architecture
 
 # Main app window
-![Main](https://github.com/lukasdekanovsky/Data-processing-and-vizualization-tool/assets/118485944/65eae18a-b278-47ad-813d-269fcf4bb07d)
+![Snímek obrazovky 2024-06-13 172146](https://github.com/lukasdekanovsky/Data-processing-and-vizualization-tool/assets/118485944/e6025470-c13a-427a-980c-079394b7fbee)
 # 2D image from selected data matrix
 ![2D image](https://github.com/lukasdekanovsky/Data-processing-and-vizualization-tool/assets/118485944/db3bf319-1a91-4d6a-af94-2a155d29574c)
 # We can also check and modify the given raw data before ploting
