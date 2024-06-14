@@ -9,6 +9,7 @@ import numpy as np
 import os
 from PIL import Image, ImageTk
 import imageio
+import shutil   
 
 
 class ScanDataProcessing():
@@ -57,7 +58,7 @@ class ScanDataProcessing():
 
     def show_gif_data(self, window):
         gif_window = tk.Toplevel(window)
-        gif_window.title("GIF Viewer")
+        gif_window.title("Scan processing")
         gif_window.geometry("400x300")
         
 
@@ -93,17 +94,31 @@ class ScanDataProcessing():
             second_listbox.insert(tk.END, gif_result)
 
         # Create a button to play the selected gif
-        play_button = tk.Button(gif_window, text="Investigate data", command=lambda: self.investigate_data(data_folder, gif_window, gif_listbox, second_listbox))
+        play_button = tk.Button(gif_window, padx=20, text="Investigate data", command=lambda: self.investigate_data(data_folder, gif_window, gif_listbox, second_listbox))
         play_button.pack()
-        play_button = tk.Button(gif_window, text="Create GIF", command=lambda: self.create_gif(gif_window, gif_listbox, second_listbox))
+        play_button = tk.Button(gif_window,padx=30, text="Create GIF", command=lambda: self.create_gif(gif_window, gif_listbox, second_listbox))
         play_button.pack()
-        play_button = tk.Button(gif_window, text="Show GIF", command=lambda: self.show_gif(gif_window,gif_listbox, second_listbox, gif_results_folder))
+        play_button = tk.Button(gif_window,padx=30, text="Show GIF", command=lambda: self.show_gif(gif_window,gif_listbox, second_listbox, gif_results_folder))
         play_button.pack()
-        play_button = tk.Button(gif_window, text="Delete all .txt files", command=lambda: self.destroy_txt_files(gif_window, gif_listbox, second_listbox))
+        play_button = tk.Button(gif_window,padx=30, text="Delete all .txt files", command=lambda: self.destroy_txt_files(gif_window, gif_listbox, second_listbox))
         play_button.pack()
-        play_button = tk.Button(gif_window, text="Delete all GIF files", command=lambda: self.destroy_gif_files(gif_window, gif_listbox, second_listbox, data_folder="./results"))
+        play_button = tk.Button(gif_window,padx=30, text="Delete all GIF files", command=lambda: self.destroy_gif_files(gif_window, gif_listbox, second_listbox, data_folder="./results"))
         play_button.pack()
+        download_button = tk.Button(gif_window, padx=30, text="Download GIF", command=lambda: self.download_gif(gif_window, second_listbox, gif_results_folder))
+        download_button.pack()
+        
+    def download_gif(self, gif_window, second_listbox, gif_results_folder):
+        selected_gif = second_listbox.get(second_listbox.curselection())
+        gif_path = os.path.join(gif_results_folder, selected_gif)
 
+        # Ask the user for the download location
+        download_folder = filedialog.askdirectory()
+
+        # Copy the GIF file to the download location
+        shutil.copy(gif_path, download_folder)
+
+        # Show a message box with the download location
+        messagebox.showinfo("GIF Downloaded", f"The GIF file has been downloaded to:\n{download_folder}")
 
     def destroy_txt_files(self, gif_window, gif_listbox, second_listbox, data_folder="./gif"):
         # Delete all files from the ./gif folder
@@ -174,6 +189,43 @@ class ScanDataProcessing():
 
         # Show a message box with the path to the created gif file
         messagebox.showinfo("GIF Created", f"The GIF file has been created and saved to:\n{gif_path}")
+
+        #-------------------PNG GIF WITH ENERGY INFORMATION -------------------------
+        for step in range(len(gif_files)):
+            # Read the pixel values from the .txt file
+            file_path = os.path.join(data_folder, gif_files[step])
+            pixel_values = np.loadtxt(file_path)
+
+            # Create a figure and axis
+            fig, ax = plt.subplots()
+            # Display the pixel values as an image
+            img = ax.imshow(pixel_values, cmap='viridis')
+            # Add a colorbar for reference
+            cbar = fig.colorbar(img)
+
+            # Adjust the visual properties
+            ax.set_title('Pixel Values')
+            ax.set_xlabel('X')
+            ax.set_ylabel('Y')
+            cbar.set_label('Intensity')
+
+            # Save the plot as an image
+            img_path = f"./gif_pngs_with_energy/image{step}.png"
+            plt.savefig(img_path)
+            plt.close()
+
+        # Get the list of PNG files by comprehension
+        png_files = [f'./gif_pngs_with_energy/image{step}.png' for step in range(len(gif_files))]
+        # Create the GIF file path
+        gif_file_path = './results/energy_gif.gif'
+        # Set the frame rate (in seconds per frame)
+        frame_rate = 1
+
+        with imageio.get_writer(gif_file_path, mode='I', duration=frame_rate) as writer:
+            for png_file in png_files:
+                image = imageio.imread(png_file)
+                writer.append_data(image)
+
 
 
     def show_gif(self,gif_window, gif_listbox, second_listbox, gif_results_folder):
