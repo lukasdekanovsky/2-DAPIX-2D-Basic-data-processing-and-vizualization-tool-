@@ -2,7 +2,7 @@ from tkinter import filedialog
 import shutil
 import os
 
-class FileManager():
+class MainPage():
 
     def __init__(self):
         self.file_path = ""
@@ -56,3 +56,6 @@ class FileManager():
 
         # Delete the file from the listbox
         file_box.delete(file_box.curselection())
+
+   
+       
